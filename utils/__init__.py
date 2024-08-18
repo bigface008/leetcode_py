@@ -1,3 +1,3 @@
-from .test import tst
+from .test import tst, TreeNode
 
-__all__ = ['tst']
+__all__ = ['tst', 'TreeNode']

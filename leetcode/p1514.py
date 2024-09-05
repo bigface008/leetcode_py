@@ -13,20 +13,45 @@ class Solution:
             u, v = e
             graph[u].add((v, succProb[i]))
             graph[v].add((u, succProb[i]))
+
         dist = [0.0] * n
         dist[start_node] = 1.0
-        min_heap = [(-1.0, start_node)] # (prob, node)
+        min_heap = [(-1.0, start_node)]
         while min_heap:
             prob, node = heapq.heappop(min_heap)
             prob = -prob
-            if prob < dist[node]:
-                continue
-            for next_node, edge_prob in graph[node]:
-                p = edge_prob * prob
+            for next_node, path_prob in graph[node]:
+                p = path_prob * prob
                 if p > dist[next_node]:
                     dist[next_node] = p
                     heapq.heappush(min_heap, (-p, next_node))
         return dist[end_node]
+
+
+
+
+
+
+
+        # graph = defaultdict(set)
+        # for i, e in enumerate(edges):
+        #     u, v = e
+        #     graph[u].add((v, succProb[i]))
+        #     graph[v].add((u, succProb[i]))
+        # dist = [0.0] * n
+        # dist[start_node] = 1.0
+        # min_heap = [(-1.0, start_node)] # (prob, node)
+        # while min_heap:
+        #     prob, node = heapq.heappop(min_heap)
+        #     prob = -prob
+        #     if prob < dist[node]:
+        #         continue
+        #     for next_node, edge_prob in graph[node]:
+        #         p = edge_prob * prob
+        #         if p > dist[next_node]:
+        #             dist[next_node] = p
+        #             heapq.heappush(min_heap, (-p, next_node))
+        # return dist[end_node]
 
 
 # class Solution:

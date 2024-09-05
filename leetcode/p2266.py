@@ -1,6 +1,16 @@
 from functools import cache
 
 
+class GardenerClientConfig:
+    def init(self, level: int):
+        self.level = level
+
+
+class GardenerClient:
+    def run(self, config) -> bool:
+        return False
+
+
 class Solution:
     def countTexts(self, pressedKeys: str) -> int:
         book = [  # num -> cnt -> char

@@ -11,8 +11,33 @@ from functools import cache
 # else:
 #   down = 0
 
-# https://leetcode.com/problems/count-special-integers/
+# 数位dp的经典例题！
+
 class Solution:
+    def countSpecialNumbers(self, n: int) -> int:
+        s = str(n)
+
+        # isLimit 表示前面填的数字是否都是n对应位上的，如果为True，那么当前位至多位int(s[i])，否则至多为9。
+        # isNum 表示前面是否填了数字（是否跳过），如果为True，那么当前位可以从0开始，如果为False，则可以跳过，或者从1开始。
+        @cache
+        def dfs(i: int, mask: int, isLimit: bool, isNum: bool) -> int:
+            if i == len(s):
+                return int(isNum)
+            res = 0
+            if not isNum:
+                res = dfs(i + 1, mask, False, False)
+            up = int(s[i]) if isLimit else 9
+            down = 0 if isNum else 1
+            for d in range(down, up + 1):
+                if mask >> d & 1 == 0:
+                    res += dfs(i + 1, mask | (1 << d), isLimit and d == up, True)
+            return res
+
+        return dfs(0, 0, True, False)
+
+
+# https://leetcode.com/problems/count-special-integers/
+class Solution2:
     def countSpecialNumbers(self, n: int) -> int:
         s = str(n)
 

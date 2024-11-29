@@ -5,29 +5,56 @@ from collections import defaultdict
 
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        N = len(candidates)
         candidates.sort()
         ans = []
         path = []
 
-        def backtrack(start: int, sum: int):
-            if sum > target:
+        def dfs(idx: int, target: int):
+            if target < 0:
                 return
-            if sum == target:
+            if target == 0:
                 ans.append(path.copy())
-            for i in range(start, len(candidates)):
-                cand = candidates[i]
-                if sum + cand > target:
-                    return
-                if i > start and candidates[i - 1] == cand:
+                return
+            for i in range(idx, N):
+                x = candidates[i]
+                if i > idx and candidates[i - 1] == x:
                     continue
-                sum += cand
-                path.append(cand)
-                backtrack(i + 1, sum)
+                if target < x:
+                    break
+                path.append(x)
+                dfs(i + 1, target - x)
                 path.pop()
-                sum -= cand
 
-        backtrack(0, 0)
+        dfs(0, target)
         return ans
+
+
+# class Solution:
+#     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+#         candidates.sort()
+#         ans = []
+#         path = []
+#
+#         def backtrack(start: int, sum: int):
+#             if sum > target:
+#                 return
+#             if sum == target:
+#                 ans.append(path.copy())
+#             for i in range(start, len(candidates)):
+#                 cand = candidates[i]
+#                 if sum + cand > target:
+#                     return
+#                 if i > start and candidates[i - 1] == cand:
+#                     continue
+#                 sum += cand
+#                 path.append(cand)
+#                 backtrack(i + 1, sum)
+#                 path.pop()
+#                 sum -= cand
+#
+#         backtrack(0, 0)
+#         return ans
 
 
 class Solution2:

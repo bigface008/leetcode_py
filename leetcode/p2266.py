@@ -1,17 +1,46 @@
 from functools import cache
+from itertools import groupby
 
 
-class GardenerClientConfig:
-    def init(self, level: int):
-        self.level = level
-
-
-class GardenerClient:
-    def run(self, config) -> bool:
-        return False
-
-
+# https://leetcode.cn/problems/count-number-of-texts/
 class Solution:
+    def countTexts(self, pressedKeys: str) -> int:
+        MOD = pow(10, 9) + 7
+        N = len(pressedKeys)
+        book = [
+            'abc',
+            'def',
+            'ghi',
+            'jkl',
+            'mno',
+            'pqrs',
+            'tuv',
+            'wxyz',
+        ]
+
+        @cache
+        def dfs(press_num: int, press_time: int) -> int:
+            if press_time < 0:
+                return 0
+            if press_time == 0:
+                return 1
+            ss = book[press_num - 2]
+            res = 0
+            for i, ch in enumerate(ss):
+                res += dfs(press_num, press_time - i - 1)
+                res %= MOD
+            return res
+
+        ans = 1
+        for key, group in groupby(pressedKeys):
+            press_num = int(key)
+            press_time = len(list(group))
+            ans *= dfs(press_num, press_time)
+            ans %= MOD
+        return ans
+
+
+class Solution2:
     def countTexts(self, pressedKeys: str) -> int:
         book = [  # num -> cnt -> char
             'abc',

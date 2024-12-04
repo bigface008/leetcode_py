@@ -21,6 +21,18 @@ def tst(desc, output, expect):
         print(f'[FAILED] {desc} output={output} expected={expect}')
 
 
+def linkedListStr(node: ListNode) -> str:
+    ans = ''
+    n = node
+    while n:
+        ans += f'{n.val} -> '
+    return ans
+
+
+def isListEqual(l1: ListNode, l2: ListNode) -> bool:
+    return linkedListStr(l1) == linkedListStr(l2)
+
+
 def newLinkedList(arr: List[int]) -> Optional[ListNode]:
     if not arr:
         return None

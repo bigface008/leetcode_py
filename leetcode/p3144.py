@@ -25,7 +25,6 @@ class Solution:
             f[i + 1] = res
         return f[N]
 
-
         # pre_sum = [[0 for _ in range(LC)] for _ in range(N + 1)]
         # each_sum = [0] * LC
         # for i, ch in enumerate(s):
@@ -82,6 +81,11 @@ class Solution:
         # return dfs(N - 1)
 
 
+class RedBlackTree:
+    def __init_(self):
+        pass
+
+
 def tst(s: str, expect: int):
     output = Solution().minimumSubstringsInPartition(s)
     utils.tst(f'min sub s={s}', output, expect)
@@ -89,4 +93,4 @@ def tst(s: str, expect: int):
 
 if __name__ == '__main__':
     tst("fabccddg", 3)
-    tst("bb", 1)
+    tst("bb", 3)

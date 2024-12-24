@@ -6,19 +6,38 @@ from math import inf
 class Solution:
     def trap(self, height: List[int]) -> int:
         N = len(height)
-        left, right = 0, N - 1
-        leftMax, rightMax = 0, 0
-        ans = 0
-        while left <= right:
-            leftMax = max(leftMax, height[left])
-            rightMax = max(rightMax, height[right])
-            if leftMax < rightMax:
-                ans += leftMax - height[left]
-                left += 1
-            else:
-                ans += rightMax - height[right]
-                right -= 1
-        return ans
+
+
+        def diameter(graph: List[List[int]]) -> int:
+            return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # N = len(height)
+        # left, right = 0, N - 1
+        # leftMax, rightMax = 0, 0
+        # ans = 0
+        # while left <= right:
+        #     leftMax = max(leftMax, height[left])
+        #     rightMax = max(rightMax, height[right])
+        #     if leftMax < rightMax:
+        #         ans += leftMax - height[left]
+        #         left += 1
+        #     else:
+        #         ans += rightMax - height[right]
+        #         right -= 1
+        # return ans
 
         # monoStk = []
         # ans = 0

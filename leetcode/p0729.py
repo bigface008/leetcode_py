@@ -13,62 +13,128 @@ class Node:
         self.add = 0
 
 
-def pushdown(node: Node):
-    if node.left is None:
-        node.left = Node()
-    if node.right is None:
-        node.right = Node()
-    if node.add == 0:
-        return
-    node.left.val += node.add
-    node.right.val += node.add
-    node.left.add += node.add
-    node.right.add += node.add
-    node.add = 0
-
-
-def pushup(node: Node):
-    node.val = max(node.left.val, node.right.val)
-
-
-def query(node: Node, start: int, end: int, l: int, r: int) -> int:
-    if l <= start and end <= r:
-        return node.val
-    pushdown(node)
-    mid = (start + end) // 2
-    ans = 0
-    if l <= mid:
-        ans = query(node.left, start, mid, l, r)
-    if r > mid:
-        ans = max(ans, query(node.right, mid + 1, end, l, r))
-    return ans
-
-
-def update(node: Node, start: int, end: int, l: int, r: int, val: int):
-    if l <= start and end <= r:
-        node.val += val
-        node.add += val
-        return
-    pushdown(node)
-    mid = (start + end) // 2
-    if l <= mid:
-        update(node.left, start, mid, l, r, val)
-    if r > mid:
-        update(node.right, mid + 1, end, l, r, val)
-    pushup(node)
-
-
 class MyCalendar:
 
     def __init__(self):
-        self.root = Node()
         self.N = pow(10, 9)
+        self.root = Node()
 
     def book(self, start: int, end: int) -> bool:
-        if query(self.root, 0, self.N, start, end - 1) > 0:
+        if self.query(self.root, 0, self.N, start, end - 1) != 0:
             return False
-        update(self.root, 0, self.N, start, end - 1, 1)
+        self.update(self.root, 0, self.N, start, end - 1)
         return True
+
+    def query(self, node: Node, start: int, end: int, l: int, r: int) -> int:
+        if l <= start and end <= r:
+            return node.val
+        self.pushDown(node)
+        mid = (start + end) // 2
+        ans = 0
+        if l <= mid:
+            ans = self.query(node.left, start, mid, l, r)
+        if mid + 1 <= r:
+            ans = max(ans, self.query(node.right, mid + 1, end, l, r))
+        return ans
+
+    def update(self, node: Node, start: int, end: int, l: int, r: int):
+        if l <= start and end <= r:
+            node.val += 1
+            node.add += 1
+            return
+        mid = (start + end) // 2
+        if l <= mid:
+            self.update(node.left, start, mid, l, r)
+        if mid + 1 <= r:
+            self.update(node.right, mid + 1, end, l, r)
+        self.pushUp(node)
+
+    def pushDown(self, node: Node):
+        if not node.left:
+            node.left = Node()
+        if not node.right:
+            node.right = Node()
+        if node.add == 0:
+            return
+        node.left.val += node.add
+        node.left.add += node.add
+        node.right.val += node.add
+        node.right.add += node.add
+        node.add = 0
+
+    def pushUp(self, node: Node):
+        ans = 0
+        if node.right:
+            ans = node.right.val
+        if node.left:
+            ans = max(ans, node.left.val)
+        node.val = ans
+
+
+# class Node:
+#     def __init__(self):
+#         self.left: Optional[Node] = None
+#         self.right: Optional[Node] = None
+#         self.val = 0
+#         self.add = 0
+#
+#
+# def pushdown(node: Node):
+#     if node.left is None:
+#         node.left = Node()
+#     if node.right is None:
+#         node.right = Node()
+#     if node.add == 0:
+#         return
+#     node.left.val += node.add
+#     node.right.val += node.add
+#     node.left.add += node.add
+#     node.right.add += node.add
+#     node.add = 0
+#
+#
+# def pushup(node: Node):
+#     node.val = max(node.left.val, node.right.val)
+#
+#
+# def query(node: Node, start: int, end: int, l: int, r: int) -> int:
+#     if l <= start and end <= r:
+#         return node.val
+#     pushdown(node)
+#     mid = (start + end) // 2
+#     ans = 0
+#     if l <= mid:
+#         ans = query(node.left, start, mid, l, r)
+#     if r > mid:
+#         ans = max(ans, query(node.right, mid + 1, end, l, r))
+#     return ans
+#
+#
+# def update(node: Node, start: int, end: int, l: int, r: int, val: int):
+#     if l <= start and end <= r:
+#         node.val += val
+#         node.add += val
+#         return
+#     pushdown(node)
+#     mid = (start + end) // 2
+#     if l <= mid:
+#         update(node.left, start, mid, l, r, val)
+#     if r > mid:
+#         update(node.right, mid + 1, end, l, r, val)
+#     pushup(node)
+#
+#
+# class MyCalendar:
+#
+#     def __init__(self):
+#         self.root = Node()
+#         self.N = pow(10, 9)
+#
+#     def book(self, start: int, end: int) -> bool:
+#         if query(self.root, 0, self.N, start, end - 1) > 0:
+#             return False
+#         update(self.root, 0, self.N, start, end - 1, 1)
+#         return True
 
 
 class MyCalendar2:

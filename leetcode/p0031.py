@@ -9,6 +9,20 @@ import utils
 class Solution:
     def nextPermutation(self, nums: List[int]) -> None:
         N = len(nums)
+        i = N - 2
+        while i >= 0 and nums[i] >= nums[i + 1]:
+            i -= 1
+        if i >= 0:
+            j = N - 1
+            while nums[i] >= nums[j]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+        nums[i + 1:] = reversed(nums[i + 1:])
+
+
+class Solution2:
+    def nextPermutation(self, nums: List[int]) -> None:
+        N = len(nums)
         if N <= 1:
             return
         if N == 2:

@@ -30,28 +30,29 @@ class Solution:
 class Solution2:
     def canBeValid(self, s: str, locked: str) -> bool:
         N = len(s)
-        if N // 2 == 1:
+        if N % 2 == 1:
             return False
-        stk = 0
-        open_cnt = 0
-        for i in range(N):
-            ch = s[i]
-            lock = locked[i] == 1
-            if ch == '(':
-                stk += 1
-                open_cnt += 1
-                if open_cnt > N // 2:
-                    if lock:
-                        return False
-                    open_cnt -= 1
-                    stk -= 2
+        lock_stk = []
+        free_stk = []
+        for i, ch in enumerate(s):
+            if locked[i] == '0':
+                free_stk.append(i)
             else:
-                stk -= 1
-                if stk < 0:
-                    if lock:
+                if ch == '(':
+                    lock_stk.append(i)
+                else:
+                    if lock_stk:
+                        lock_stk.pop()
+                    elif free_stk:
+                        free_stk.pop()
+                    else:
                         return False
-                    stk += 2
-        return stk == 0
+        while lock_stk and free_stk:
+            if lock_stk[-1] > free_stk[-1]:
+                return False
+            lock_stk.pop()
+            free_stk.pop()
+        return not lock_stk
 
 # ))()))
 # 010100

@@ -23,7 +23,25 @@ class Solution:
             states[node] = 2
             return True
 
-        return [i for i in range(N) if isSafe(i)]
+        return [n for n in range(N) if isSafe(n)]
+
+        # N = len(graph)
+        # states = [0] * N
+        #
+        # def isSafe(node: int) -> bool:
+        #     if states[node] == 1:
+        #         return False
+        #     if states[node] == 2:
+        #         return True
+        #
+        #     states[node] = 1
+        #     for sub in graph[node]:
+        #         if not isSafe(sub):
+        #             return False
+        #     states[node] = 2
+        #     return True
+        #
+        # return [i for i in range(N) if isSafe(i)]
 
 
 def check(graph: List[List[int]], expect: List[int]):

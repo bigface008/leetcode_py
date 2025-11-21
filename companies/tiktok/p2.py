@@ -1,4 +1,6 @@
 # 给定一个数组nums，每个元素nums[i]代表横坐标i和i+1之间有一个高为nums[i]的长方形，求这些长方形的下方区域所能构成的最大长方形的面积。
+from itertools import permutations
+from string import ascii_lowercase
 from typing import List
 
 import utils
@@ -85,9 +87,10 @@ def check(nums: List[int], expect: int):
 
 
 if __name__ == '__main__':
-    check([2, 1, 5, 6, 2, 3], 10)
-    check([2, 3], 4)
-    check([2, 4], 4)
-    check([1], 1)
-    check([2, 1, 2], 3)
-    check([4, 2, 0, 3, 2, 5], 6)
+    # check([2, 1, 5, 6, 2, 3], 10)
+    # check([2, 3], 4)
+    # check([2, 4], 4)
+    # check([1], 1)
+    # check([2, 1, 2], 3)
+    # check([4, 2, 0, 3, 2, 5], 6)
+    print(list(permutations(ascii_lowercase, 2)))

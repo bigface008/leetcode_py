@@ -11,17 +11,37 @@ import utils
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         N = len(nums)
-        ans = 0
-        f = [0] * N
-        for i in range(N):
-            temp = 0
-            for j in range(i, -1, -1):
+        dp = [0] * N
+        dp[0] = 1
+        ans = 1
+        for i in range(1, N):
+            prev_len = 0
+            for j in range(i - 1, -1, -1):
                 if nums[j] < nums[i]:
-                    temp = max(temp, f[j])
-            f[i] = temp + 1
-            ans = max(f[i], ans)
-
+                    prev_len = max(prev_len, dp[j])
+            dp[i] = prev_len + 1
+            ans = max(ans, dp[i])
         return ans
+
+        # dp[i] =
+        #   if nums[i] > nums[i - 1]:
+        #     dp[i - 1] + 1
+        #   else:
+        #     0
+
+        # N = len(nums)
+        # ans = 0
+        # f = [0] * N
+        # for i in range(N):
+        #     temp = 0
+        #     for j in range(i, -1, -1):
+        #         if nums[j] < nums[i]:
+        #             temp = max(temp, f[j])
+        #     f[i] = temp + 1
+        #     ans = max(f[i], ans)
+        #
+        # return ans
+
         # N = len(nums)
         # ans = 0
         # f = [0] * N

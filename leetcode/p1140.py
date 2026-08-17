@@ -5,11 +5,14 @@ from math import inf
 
 import utils
 
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        N = len(piles)
 
 # dfs(i) = sum(piles[i:]) - min(dfs(i + x))
 
 # https://leetcode.com/problems/stone-game-ii/description/?envType=daily-question&envId=2024-08-20
-class Solution:
+class Solution2:
     def stoneGameII(self, piles: List[int]) -> int:
         N = len(piles)
         sufSum = list(accumulate(piles[::-1], initial=0))[::-1]
